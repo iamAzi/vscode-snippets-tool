@@ -38,16 +38,47 @@ async function addFile() {
     const { stdout } = await execa('whoami');
     const whoAmI = stdout;
 
-    const { snippetName, description, ccc } = await inquirer.prompt([
+    const { snippetName, description, scope } = await inquirer.prompt([
         {
             name: 'snippetName',
             type: 'input',
-            message: 'Snippet 热键: '
+            message: 'Prefix (热键): ',
+            validate: (input) => {
+                if (!input) {
+                    console.log(c.red('💩 热键不能为空！'))
+                    return false;
+                } else {
+                    return true;
+                }
+            }
         },
         {
             name: 'description',
             type: 'input',
-            message: 'Snippet 描述: ',
+            message: 'description (描述): ',
+            default: `Fast Snippet Created in ${new Date().toLocaleString()}`
+        },
+        {
+            name: 'scope',
+            type: 'list',
+            choices: [{
+                name: 'all',
+                short: 'All Scope',
+                value: '',
+            }, {
+                name: 'css',
+                short: 'css (include CSS/SCSS/LESS)',
+                value: 'css, scss, less',
+            }, {
+                name: 'es',
+                short: 'js (include js, jsx, ts, tsx)',
+                value: 'javascript, jsx, typescript, tsx',
+            }, {
+                name: 'html',
+                short: 'HTML',
+                value: 'html',
+            }],
+            message: 'scope (使用范围): ',
             default: `Fast Snippet Created in ${new Date().toLocaleString()}`
         }
     ])
@@ -57,24 +88,28 @@ async function addFile() {
     let content = {};
     if (exists) {
         const curSnip = fse.readFileSync(outputFile, 'utf-8');
-        const curSnipObj = JSON.parse(curSnip);
-        curSnipObj[snippetName] = {
+        content = JSON.parse(curSnip);
+        content[snippetName] = {
             prefix: snippetName,
             body: res,
             description: description
         }
-        content = curSnipObj;
     } else {
-        content = {
-            snippetName: {
-                prefix: snippetName,
-                body: res,
-                description: description
-            }
+        content[snippetName] = {
+            prefix: snippetName,
+            body: res,
+            description: description
         }
     }
-    fse.writeFileSync(outputFile, `${JSON.stringify(content, null, 2)}`);
-    console.log('代码片段已添加！');
+
+    if (scope) {
+        content[snippetName] = {
+            scope,
+            ...content[snippetName],
+        }
+    }
+    fse.writeFileSync(outputFile, `${JSON.stringify(content, null, 4)}`);
+    console.log(c.green.bold(`\n 🖨  Snippets 已添加！`));
     rl.close();
 }
 
