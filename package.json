@@ -1,0 +1,33 @@
+{
+  "name": "vscode-snippets-tool",
+  "version": "1.0.0",
+  "description": "a tool to add snippets in VSCode",
+  "main": "index.js",
+  "bin": {
+    "snip": "./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iamAzi/vscode-snippets-tool.git"
+  },
+  "keywords": [
+    "VSCode",
+    "Snippets",
+    "add snippets",
+    "Tool",
+    "Efficient"
+  ],
+  "author": "Azi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/iamAzi/vscode-snippets-tool/issues"
+  },
+  "homepage": "https://github.com/iamAzi/vscode-snippets-tool#readme",
+  "dependencies": {
+    "chalk": "^4.0.0",
+    "commander": "^5.0.0",
+    "execa": "^4.0.0",
+    "fs-extra": "^9.0.0",
+    "inquirer": "^7.1.0"
+  }
+}
