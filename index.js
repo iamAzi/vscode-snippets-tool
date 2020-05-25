@@ -72,7 +72,7 @@ async function addFile() {
             }, {
                 name: 'es',
                 short: 'js (include js, jsx, ts, tsx)',
-                value: 'javascript, jsx, typescript, tsx',
+                value: 'javascript, javascriptreact, typescript, typescriptreact',
             }, {
                 name: 'html',
                 short: 'HTML',
@@ -115,7 +115,7 @@ async function addFile() {
 
 /**
  * check if the target snippet file exists
- * @param {string}} filePath 
+ * @param {string}} filePath
  */
 async function checkFileExist(filePath) {
     const exists = await fse.pathExists(filePath)

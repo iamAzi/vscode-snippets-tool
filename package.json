@@ -1,6 +1,6 @@
 {
-  "name": "vscode-snippets-tool",
-  "version": "1.0.0",
+  "name": "vscode-add-snippets",
+  "version": "1.0.1",
   "description": "a tool to add snippets in VSCode",
   "main": "index.js",
   "bin": {
